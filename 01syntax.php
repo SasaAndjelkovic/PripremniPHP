@@ -10,4 +10,4 @@
     echo "My car is " .$color. "<br>";
     echo "My house is" .$COLOR. "<br>"; //Undefined variable $COLOR
     echo "My boat is" .$coLOR. "<br>"; #Undefined variable $coLOR
-
+?>
