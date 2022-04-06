@@ -19,6 +19,6 @@
     echo $y++;  //output 9
     echo "<br>";
     echo $y;    //output 10
-?>
+?> 
 
 
