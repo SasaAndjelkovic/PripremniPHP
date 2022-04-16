@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html>
-<body>
-
-    <form method="post"  action="<?php echo $_SERVER['PHP_SELF'];?>">
-        Name: <input type="text" name="fname">
-        <input type="submit">
-    </form>
-
-    <?php
+<?php
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             //colect value of input field
             $name = htmlspecialchars($_REQUEST['fname']);
@@ -18,8 +9,3 @@
             }
         }
     ?>
-
-</body>
-</html>
-
-        
