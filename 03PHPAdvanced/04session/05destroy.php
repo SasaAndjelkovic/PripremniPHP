@@ -7,7 +7,7 @@
 <html>
     <body>
         <?php
-            //session_unset();
+            session_unset();
             session_destroy();
             print_r($_SESSION);
         ?>
