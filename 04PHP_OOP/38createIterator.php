@@ -28,7 +28,7 @@
 
         public function valid() {
             //count() indicates how many items are in the list
-            return $this->pointer < count($this->items);   //stavljene obicne zagrade umesto viticastih
+            return $this->pointer < count($this->items);  
         }
     }
 
