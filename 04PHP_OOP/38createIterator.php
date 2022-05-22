@@ -28,12 +28,12 @@
 
         public function valid() {
             //count() indicates how many items are in the list
-            return $this->pointer < count{$this->items};
+            return $this->pointer < count($this->items);   //stavljene obicne zagrade umesto viticastih
         }
     }
 
     //A function that uses iterables
-    function printerable(iterable $myIterable) {
+    function printIterable(iterable $myIterable) {
         foreach ($myIterable as $item) {
             echo $item;
         }
