@@ -1,7 +1,5 @@
 <?php
 
-use LDAP\Result;
-
 $con = mysqli_connect(hostname: 'localhost', username: 'root', password: '', database: 'social_network');
 
 function escape($string) {
