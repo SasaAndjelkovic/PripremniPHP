@@ -5,7 +5,7 @@
     }
 
     function redirect($location) {
-        header(header: "location: {$location}");
+        header("location: {$location}");
         exit();
     }
 
@@ -128,14 +128,15 @@
             if(empty($password)) {
                 $errors[] = "Password field cannot be empty";
             }
-
             if(empty($errors)) {
                 if(user_login($email, $password)) {
-                    redirect(location: "index.php");
+                    redirect('index.php');
                 } else {
-                    $errros[] = "Your email or password is incorrect, please try again";
+                    $errors[] = "Your email or password is incorrect, please try again";
                 }
-            } else {
+            }
+
+            if (!empty($errors)) {
                 foreach ($errors as $error) {
                     echo '<div class="alert">' . $error . '</div>';
                 }
@@ -145,12 +146,12 @@
 
     function user_login($email, $password) {
         $password = filter_var($password, FILTER_SANITIZE_STRING);
-        $email = filter_var($email, FILTER_SANITIZE_STRING);
+        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
 
         $query = "SELECT * FROM users WHERE email='$email'";
         $result = query($query);
 
-        if($result->num_rows > 0) {
+        if($result->num_rows == 1) {
             $data = $result->fetch_assoc();
 
             if(password_verify($password, $data['password'])) {
@@ -162,4 +163,26 @@
         } else {
             return false;
         }
+    }
+
+    function get_user($id = NULL) {
+        if($id != NULL) {
+            $query = "SELECT * FROM users WHERE id=" . $id;
+            $result = query($query);
+
+            if ($result->num_rows > 0) {
+                return $result->fetch_assoc();
+            } else {
+                return "Users not found.";
+            }
+        } else {
+            $query = "SELECT * FROM users WHERE email=" . $_SESSION['email'] . "'";
+            $result = query($query);
+    
+            if ($result->num_rows > 0) {
+                return $result->fetch_assoc();
+            } else {
+                return "Users not found.";
+            }
+        }   
     }
