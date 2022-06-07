@@ -186,3 +186,14 @@
             }
         }   
     }
+
+    function user_profile_image_upload() {
+        if($_SERVER['REQUEST_METHOD'] == "POST") {
+            $target_dir = "uploads/";
+            $user = get_user();
+            $user_id = $user['id'];
+            $target_file = $target_dir . $user_id . "." . 
+            pathinfo(basename($_FILES['profile_image_file']['name']), 
+            PATHINFO_EXTENSION);
+        }
+    }
