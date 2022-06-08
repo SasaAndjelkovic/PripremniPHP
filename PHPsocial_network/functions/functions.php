@@ -192,8 +192,44 @@
             $target_dir = "uploads/";
             $user = get_user();
             $user_id = $user['id'];
-            $target_file = $target_dir . $user_id . "." . 
-            pathinfo(basename($_FILES['profile_image_file']['name']), 
-            PATHINFO_EXTENSION);
+            $target_file = $target_dir . $user_id . "." . pathinfo(basename($_FILES['profile_image_file']['name']), PATHINFO_EXTENSION);
+            $uploadOk = 1;
+            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+            $error = "";
+
+            $check = getimagesize($_FILES["profile_image_file"]["tmp_name"]);
+            if($check !== false) {
+                $uploadOk = 1;
+            } else {
+                $error = "File is not an image.";
+                $uploadOk = 0;
+            }
+
+            if($_FILES["profile_image_file"]["size"] > 5000000) {
+                $error = "Sorry, your file is too large";
+                $uploadOk = 0;
+            }
+
+            if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+                $error = "Sory, only JPG, PNG, JPEG & GIF files are allowed.";
+                $uploadOk = 0;
+            }
+
+            if($uploadOk == 0) {
+                set_message("Error uploading file: " . $error);
+            } else {
+                $sql = "UPDATE users SET profile_image = '$target_file' WHERE id=$user_id";
+                confim(query($sql));
+
+                set_message(2);
+
+                if(!move_uploaded_file($_FILES["profile_image_file"]["tmp_name"], $target_file)) {
+                    set_message("Error uploading file: " . $error);
+                }
+            }
+
+            redirect('profile.php');
+
+
         }
     }
