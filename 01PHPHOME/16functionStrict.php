@@ -17,7 +17,7 @@
 
     //pass-by-reference
     function add_five(&$value){
-        $value +=5;
+        $value +=5;     //nema return niti echo
     }
 
     $num = 2;

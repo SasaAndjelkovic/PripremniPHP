@@ -151,7 +151,7 @@
         $result = query($query);
 
         //if($result->num_rows == 1) {
-            $data = $result->fetch_assoc();
+            $data = $result->fetch_assoc();   // $data is a reference to $obj->value, which is ...
             echo 'Hi' . $data  . 'Kako';
 
             return true;
