@@ -1,7 +1,7 @@
 <?php
 
-    function clean($string) {
-        return htmlentities($string);
+    function clean($str) {
+        return htmlentities($str);
     }
 
     function redirect($location) {
@@ -108,7 +108,7 @@
             $password = password_hash($password, algo: PASSWORD_DEFAULT);
     
             $sql = "INSERT INTO users(first_name, last_name, username, profile_image, email, password) ";
-            $sql .= "VALUES('$first_name', '$last_name', '$username', 'uploads/default.jpg', '$email', '$password')";
+            $sql .= "VALUES('$first_name', '$last_name', '$username', 'uploads/default.jpg', '$email', '$password')";  //ovo je nastavak $sql stringa
     
             confim(query($sql));
             set_message("You have been succesfully registred! Please Log in!");
@@ -122,20 +122,19 @@
             $email = clean($_POST['email']);
             $password = clean($_POST['password']);
 
-            if(empty($email)) {
+            if (empty($email)) {
                 $errors[] = "Email field cannot be empty";
             }
-            if(empty($password)) {
+            if (empty($password)) {
                 $errors[] = "Password field cannot be empty";
             }
-            if(empty($errors)) {
-                if(user_login($email, $password)) {
+            if (empty($errors)) {
+                if (user_login($email, $password)) {
                     redirect('index.php');
                 } else {
                     $errors[] = "Your email or password is incorrect, please try again";
                 }
             }
-
             if (!empty($errors)) {
                 foreach ($errors as $error) {
                     echo '<div class="alert">' . $error . '</div>';
@@ -151,17 +150,34 @@
         $query = "SELECT * FROM users WHERE email='$email'";
         $result = query($query);
 
-        if($result->num_rows == 1) {
+        //if($result->num_rows == 1) {
             $data = $result->fetch_assoc();
+            echo 'Hi' . $data  . 'Kako';
 
-            if(password_verify($password, $data['password'])) {
+            return true;
+
+           /*  if(password_verify($password, $data['password'])) {
                 $_SESSION['email'] = $email;
                 return true;
             } else {
                 return false;
-            }
-        } else {
-            return false;
+            } */
+       // } else {
+         //   return false;
+        //} else {
+        //    echo 'Nista';
+        //}
+    }
+
+    function login_check_pages() {
+        if (isset($_SESSION['email'])) {
+            redirect('index.php');
+        }
+    }
+
+    function user_restrictions() {
+        if (isset($_SESSION['email'])) {
+            redirect('login.php');
         }
     }
 
@@ -220,8 +236,7 @@
             } else {
                 $sql = "UPDATE users SET profile_image = '$target_file' WHERE id=$user_id";
                 confim(query($sql));
-
-                set_message(2);
+                set_message('Profile Image uploaded!');
 
                 if(!move_uploaded_file($_FILES["profile_image_file"]["tmp_name"], $target_file)) {
                     set_message("Error uploading file: " . $error);
@@ -229,7 +244,6 @@
             }
 
             redirect('profile.php');
-
 
         }
     }

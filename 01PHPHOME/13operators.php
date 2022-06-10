@@ -4,13 +4,13 @@
     $z = 9;
 
     echo "<br>";
-    echo ($x <=> $y);
+    echo ($x <=> $y); //output -1
     echo "<br>";
 
-    echo ($y <=> $x);
+    echo ($y <=> $x); //output 1
     echo "<br>";
 
-    echo ($y <=> $z);
+    echo ($y <=> $z); //output 0
     echo "<br>";
 
     echo ++$x;  //output 6

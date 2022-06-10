@@ -1,10 +1,11 @@
-<?php include "inc/header.php"; ?>
+<?php 
+    include "inc/header.php"; 
+    login_check_pages();
+?>
 
 <div>
-<?php 
-    display_message(); 
-    validate_user_login();
-?>
+    <?php display_message(); ?>
+    <?php validate_user_login(); ?>
 </div>
 
 <form method="POST">
